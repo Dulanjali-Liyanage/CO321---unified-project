@@ -1,4 +1,6 @@
 #include <SPI.h>
+#include <NTPClient.h>
+#include <WiFiUdp.h>
 #include <MFRC522.h> // rfid header
 #include <ESP8266WiFi.h>
 #include <FirebaseArduino.h>
@@ -22,10 +24,16 @@
 
 int relay_pin = 4; // define the relay input pin D4
 
+const long utcOffsetInSeconds = 19800; // set the utc for the region -- For UTC +5.30 : 5.5 * 60 * 60 : 19800
+
 MFRC522 mfrc522(SS_PIN, RST_PIN);  // Create MFRC522 instance
 
 LiquidCrystal_I2C lcd(0x27, 16, 2); // you should check the address of the lcd and add it as the first parameter
                                     // other 2 parameters where your cursor is going to be initially
+
+// Define NTP Client to get time
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds);
 
 void setup() {
   Serial.begin(9600);   // Initialize serial communications with the PC
@@ -58,6 +66,8 @@ void setup() {
   digitalWrite( relay_pin , HIGH);//close the door
 
   pinMode(IRSensor, INPUT); //get the input from the ir sensor
+
+  timeClient.begin(); // begin the time calculation
 }
 
 
@@ -115,7 +125,8 @@ void loop() {
       //update the whether he/she entered or not
       //Serial.println(slotkey);
 
-      Firebase.setString("Employers/" + slotkey + "/enValue", "entered");
+      timeClient.update(); // update the time calculation
+      Firebase.setString("Employers/" + slotkey + "/enValue", timeClient.getFormattedDate()); // update the employer entered time in the firebase database
 
       //Firebase.pushString("History_Of_Entered/"+ );
 
@@ -126,7 +137,7 @@ void loop() {
       while (count < 2) {
         if (analogRead(IRSensor) < 30) { // when a person is detected
           count++;
-          while (analogRead(IRSensor) < 30) {} // wait until a person is detected
+          while (analogRead(IRSensor) < 30) {} // wait until the person is enter through the door
         }
         delay(100); // delay if no unauthorized behind and authorized
         countTime++;
