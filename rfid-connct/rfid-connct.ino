@@ -35,6 +35,11 @@ LiquidCrystal_I2C lcd(0x27, 16, 2); // you should check the address of the lcd a
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds);
 
+// Variables to save date and time
+String formattedDate;
+String dayStamp;
+String timeStamp;
+
 void setup() {
   Serial.begin(9600);   // Initialize serial communications with the PC
   while (!Serial);    // Do nothing if no serial port is opened (added for Arduinos based on ATMEGA32U4)
@@ -126,7 +131,26 @@ void loop() {
       //Serial.println(slotkey);
 
       timeClient.update(); // update the time calculation
-      Firebase.setString("Employers/" + slotkey + "/enValue", timeClient.getFormattedDate()); // update the employer entered time in the firebase database
+
+      // The formattedDate comes with the following format:
+      // 2018-05-28T16:00:13Z
+      // We need to extract date and time
+      formattedDate = timeClient.getFormattedDate();
+      Serial.println(formattedDate);
+
+      // Extract date
+      int splitT = formattedDate.indexOf("T");
+      dayStamp = formattedDate.substring(0, splitT);
+      Serial.print("DATE: ");
+      Serial.println(dayStamp);
+
+      // Extract time
+      timeStamp = formattedDate.substring(splitT+1, formattedDate.length()-1);
+      Serial.print("HOUR: ");
+      Serial.println(timeStamp);
+      
+      Firebase.setString("Employers/" + slotkey + "/enter_date", dayStamp); // update the employer entered date in the firebase database
+      Firebase.setString("Employers/" + slotkey + "/enter_time", timeStamp); // update the employer entered time in the firebase database
 
       //Firebase.pushString("History_Of_Entered/"+ );
 
