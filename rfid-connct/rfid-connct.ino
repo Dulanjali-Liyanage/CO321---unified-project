@@ -130,28 +130,7 @@ void loop() {
       //update the whether he/she entered or not
       //Serial.println(slotkey);
 
-      timeClient.update(); // update the time calculation
-
-      // The formattedDate comes with the following format:
-      // 2018-05-28T16:00:13Z
-      // We need to extract date and time
-      formattedDate = timeClient.getFormattedDate();
-      Serial.println(formattedDate);
-
-      // Extract date
-      int splitT = formattedDate.indexOf("T");
-      dayStamp = formattedDate.substring(0, splitT);
-      Serial.print("DATE: ");
-      Serial.println(dayStamp);
-
-      // Extract time
-      timeStamp = formattedDate.substring(splitT+1, formattedDate.length()-1);
-      Serial.print("HOUR: ");
-      Serial.println(timeStamp);
       
-      Firebase.setString("Employers/" + slotkey + "/enter_date", dayStamp); // update the employer entered date in the firebase database
-      Firebase.setString("Employers/" + slotkey + "/enter_time", timeStamp); // update the employer entered time in the firebase database
-
       //Firebase.pushString("History_Of_Entered/"+ );
 
 
@@ -177,6 +156,9 @@ void loop() {
 
         Serial.println("more people");
 
+        timeClient.update(); // update the time calculation
+        Firebase.pushString("Access_Denied", timeClient.getFormattedDate());
+
         digitalWrite( relay_pin , HIGH); // close the door immediately
 
         //display in lcd
@@ -193,6 +175,29 @@ void loop() {
         //break;
       }
 
+      timeClient.update(); // update the time calculation
+
+      // The formattedDate comes with the following format:
+      // 2018-05-28T16:00:13Z
+      // We need to extract date and time
+      formattedDate = timeClient.getFormattedDate();
+      Serial.println(formattedDate);
+
+      // Extract date
+      int splitT = formattedDate.indexOf("T");
+      dayStamp = formattedDate.substring(0, splitT);
+      Serial.print("DATE: ");
+      Serial.println(dayStamp);
+
+      // Extract time
+      timeStamp = formattedDate.substring(splitT+1, formattedDate.length()-1);
+      Serial.print("HOUR: ");
+      Serial.println(timeStamp);
+      
+      Firebase.setString("Employers/" + slotkey + "/enter_date", dayStamp); // update the employer entered date in the firebase database
+      Firebase.setString("Employers/" + slotkey + "/enter_time", timeStamp); // update the employer entered time in the firebase database
+
+
       digitalWrite( relay_pin , HIGH); // close the door
       ESP.restart(); //restart the code after the door closed
       //break;
@@ -200,6 +205,9 @@ void loop() {
 
     if (i == Registered_Tags.size()) { // uid tag is not present inside the registered tags of the database
       Serial.println(" Access Denied");
+
+      timeClient.update(); // update the time calculation
+      Firebase.pushString("Access_Denied", timeClient.getFormattedDate());
 
       //display in lcd
       Wire.begin(2, 0);
