@@ -132,10 +132,6 @@ void loop() {
       //update the whether he/she entered or not
       //Serial.println(slotkey);
 
-      
-      //Firebase.pushString("History_Of_Entered/"+ );
-
-
       int count = 0;// count people
       int countTime = 0; // count the timer delay
 
@@ -198,7 +194,7 @@ void loop() {
       
       Firebase.setString("Employers/" + slotkey + "/enter_date", dayStamp); // update the employer entered date in the firebase database
       Firebase.setString("Employers/" + slotkey + "/enter_time", timeStamp); // update the employer entered time in the firebase database
-
+      Firebase.pushString("History_Of_Entered/",uidTag + "u" + dayStamp + "u" + timeStamp); // update the history
 
       digitalWrite( relay_pin , HIGH); // close the door
       ESP.restart(); //restart the code after the door closed
