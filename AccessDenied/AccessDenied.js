@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import fire from "./fire";
+import "./AccessDenied.css";
 
 class AccessDenied extends Component {
   state = {
@@ -29,10 +30,15 @@ class AccessDenied extends Component {
     const [date, timez] = str.split("T");
     const [time] = timez.split("Z");
     return (
-      <div>
-        {date}
-        <br></br>
-        {time}
+      <div class="alert">
+        <span
+          class="closebtn"
+          onclick="this.parentElement.style.display='none';"
+        >
+          &times;
+        </span>
+        <strong><h2>Unauthorized Access!</h2></strong><h1> &nbsp;&nbsp;&nbsp; Date: &nbsp;&nbsp;&nbsp; {date}{" "}
+        &nbsp;&nbsp;&nbsp; Time: &nbsp;&nbsp;&nbsp; {time}</h1>
       </div>
     );
   }
