@@ -1,0 +1,46 @@
+.navfont {
+  font-size: 15px;
+  padding-left: 10px;
+  color: white;
+  padding-right: 5px;
+}
+
+.bacimg {
+  background-color: aqua;
+}
+
+.boxer0 {
+  width: 60vh;
+  height: 56vh;
+  background-color: white;
+  border: 5px solid gray;
+  margin-top: 30px;
+  margin-left: 35%;
+}
+
+.headword {
+  text-align: center;
+  color: black;
+  font-size: 20px;
+  font-style: bold;
+}
+
+.headword1 {
+  text-align: left;
+  color: black;
+  font-size: 20px;
+  font-style: bold;
+}
+
+.gap {
+  padding-top: 25px;
+  padding-left: 25px;
+}
+
+.linkside {
+  width: 20%;
+}
+
+.barside {
+  width: 80%;
+}
