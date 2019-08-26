@@ -1,5 +1,5 @@
 #include <SPI.h>
-#include <NTPClient.h>
+#include <NTPClient.h> // header for time and date
 #include <WiFiUdp.h>
 #include <MFRC522.h> // rfid header
 #include <ESP8266WiFi.h>
@@ -8,6 +8,8 @@
 #include <ESP8266HTTPClient.h>
 #include <Wire.h> // lcd header
 #include <LiquidCrystal_I2C.h> // lcd header
+
+StaticJsonBuffer<200> jsonBuffer;
 
 #define RST_PIN         5         //D1 pin -- rfid pin
 #define SS_PIN          15        //D8 pin -- rfid pin
@@ -95,7 +97,7 @@ void loop() {
   Serial.print("UID tag: ");
   String uidTag = "";
   for (byte i = 0; i < mfrc522.uid.size; i++) {
-    uidTag.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? "0" : " "));
+    uidTag.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? "0" : " ")); // uid tag will get space at the begining
     uidTag.concat(String(mfrc522.uid.uidByte[i], HEX));
   }
   uidTag.toUpperCase();
@@ -207,8 +209,8 @@ void loop() {
       Serial.println(" Access Denied");
 
       timeClient.update(); // update the time calculation
-      Firebase.pushString("Access_Denied", timeClient.getFormattedDate());
-
+      Firebase.pushString("Access_Denied", timeClient.getFormattedDate()); // add the date and tie of unauthorized access
+      
       //display in lcd
       Wire.begin(2, 0);
       lcd.init();
