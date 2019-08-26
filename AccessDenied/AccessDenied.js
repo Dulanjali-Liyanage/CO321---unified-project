@@ -37,8 +37,14 @@ class AccessDenied extends Component {
         >
           &times;
         </span>
-        <strong><h2>Unauthorized Access!</h2></strong><h1> &nbsp;&nbsp;&nbsp; Date: &nbsp;&nbsp;&nbsp; {date}{" "}
-        &nbsp;&nbsp;&nbsp; Time: &nbsp;&nbsp;&nbsp; {time}</h1>
+        <strong>
+          <h2>Unauthorized Access!</h2>
+        </strong>
+        <h1>
+          {" "}
+          &nbsp;&nbsp;&nbsp; Date: &nbsp;&nbsp;&nbsp; {date} &nbsp;&nbsp;&nbsp;
+          Time: &nbsp;&nbsp;&nbsp; {time}
+        </h1>
       </div>
     );
   }
@@ -46,7 +52,7 @@ class AccessDenied extends Component {
   render() {
     return (
       <div>
-        {this.state.accDenied.map(rt => {
+        {this.state.accDenied.reverse().map(rt => {
           return <div>{this.handleSplit(rt.dt)}</div>;
         })}
       </div>
