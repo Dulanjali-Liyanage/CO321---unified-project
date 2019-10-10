@@ -17,8 +17,8 @@ StaticJsonBuffer<200> jsonBuffer;
 // Set these to run code
 #define FIREBASE_HOST "automatic-door-lock.firebaseio.com" // your firebase databse name
 #define FIREBASE_AUTH "KMlSMn5A3JpY9u93aas2vjqChTuC9rhrPmTLgIBz" // your firebase database secret key
-#define WIFI_SSID "Dialog 4G 278"  // your wifi name
-#define WIFI_PASSWORD "7b13d7C1"   // your wifi password
+#define WIFI_SSID "rosh_wifi"  // your wifi name
+#define WIFI_PASSWORD "dinahsor7"   // your wifi password
 
 #define IRSensor        A0  //A0 pin - ir sensor input
 
@@ -169,6 +169,11 @@ void loop() {
         digitalWrite(buzzer, LOW);
         delay(1000);
 
+        Wire.begin(2, 0);
+        lcd.init();   // initializing the LCD
+        lcd.backlight(); // Enable or Turn On the backlight
+        lcd.print("WELCOME");
+
         ESP.restart(); //restart the code after the closed
         //break;
       }
@@ -218,7 +223,12 @@ void loop() {
       digitalWrite(buzzer, LOW);
       delay(1000);
 
-      ESP.restart(); //restart the code
+      Wire.begin(2, 0);
+      lcd.init();   // initializing the LCD
+      lcd.backlight(); // Enable or Turn On the backlight
+      lcd.print("WELCOME");
+
+     // ESP.restart(); //restart the code
       break; // break the for loop of iterating through the json object
     }
     i++; // count the number of uid tags inside the registered tags of the database
