@@ -15,10 +15,10 @@ SoftwareSerial mySerial(D5, D6); // RX, TX
 StaticJsonBuffer<200> jsonBuffer;
 
 // Set these to run code
-#define FIREBASE_HOST "automatic-door-lock.firebaseio.com" // your firebase databse name
-#define FIREBASE_AUTH "KMlSMn5A3JpY9u93aas2vjqChTuC9rhrPmTLgIBz" // your firebase database secret key
-#define WIFI_SSID "Dialog 4G 278"  // your wifi name
-#define WIFI_PASSWORD "7b13d7C1"   // your wifi password
+#define FIREBASE_HOST "<>" // your firebase databse name
+#define FIREBASE_AUTH "<>" // your firebase database secret key
+#define WIFI_SSID "<>"  // your wifi name
+#define WIFI_PASSWORD "<>"   // your wifi password
 
 #define IRSensor    A0  //A0 pin - ir sensor input
 

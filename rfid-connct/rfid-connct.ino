@@ -15,10 +15,10 @@ StaticJsonBuffer<200> jsonBuffer;
 #define SS_PIN          15        //D8 pin -- rfid pin
 
 // Set these to run code
-#define FIREBASE_HOST "automatic-door-lock.firebaseio.com" // your firebase databse name
-#define FIREBASE_AUTH "KMlSMn5A3JpY9u93aas2vjqChTuC9rhrPmTLgIBz" // your firebase database secret key
-#define WIFI_SSID "rosh_wifi"  // your wifi name
-#define WIFI_PASSWORD "dinahsor7"   // your wifi password
+#define FIREBASE_HOST "<>" // your firebase databse name
+#define FIREBASE_AUTH "<>" // your firebase database secret key
+#define WIFI_SSID "<>"  // your wifi name
+#define WIFI_PASSWORD "<>"   // your wifi password
 
 #define IRSensor        A0  //A0 pin - ir sensor input
 
